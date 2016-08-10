@@ -18,6 +18,9 @@ import CoroUtil.util.CoroUtil;
 
 public class CommandZA extends CommandBase {
 
+	private int intVal_ex = 0;
+	private int intVal_ex_temp = -1;
+	
 	@Override
 	public String getCommandName() {
 		return "za";
@@ -47,9 +50,9 @@ public class CommandZA extends CommandBase {
 	        		} else {
 	        			int intVal = 0;
 			        	try {
-			        		intVal = Integer.valueOf(var2[2]);
-			        	} catch (Exception ex2) { } //silence!
-			        	boolean boolVal = Boolean.valueOf(var2[2]);
+			        		intVal = Integer.parseInt(var2[2]);
+			        	} catch (Exception ex2) { intVal_ex++; } //silence!
+			        	boolean boolVal = Boolean.parseBoolean(var2[2]);
 			        	
 			        	if (intVal > 0) {
 			        		OldUtil.setPrivateValueBoth(ZombieAwareness.class, ZombieAwareness.instance, var2[1], var2[1], intVal);
@@ -83,6 +86,7 @@ public class CommandZA extends CommandBase {
 			System.out.println("Caught ZA command crash!!!");
 			ex.printStackTrace();
 		}
+		if (intVal_ex != 0 && intVal_ex_temp != intVal_ex) {intVal_ex_temp = intVal_ex;System.out.println("intVal_ex: "+intVal_ex);}
 	}
 	
 	@Override

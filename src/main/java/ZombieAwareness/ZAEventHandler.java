@@ -47,10 +47,10 @@ public class ZAEventHandler {
 		
 		//System.out.println("TODO: EXPLOSION SOUND SENSE");
 		
-		if (event.source.damageType.contains("explosion")) {
+		//if (event.source.damageType.contains("explosion")) { //todo?
 			
 			//HOOK EXPLOSTION to create big sense, can only hook hurting ones but its a start
-		}
+		//}
 		
 	}
 }

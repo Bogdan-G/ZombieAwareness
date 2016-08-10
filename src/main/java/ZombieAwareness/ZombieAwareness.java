@@ -212,7 +212,7 @@ public class ZombieAwareness implements IPFCallback {
     		
     		boolean spawned = false;
     		
-    		Random rand = new Random();
+    		Random rand = new org.bogdang.modifications.random.XSTR();
     		
     		//time reset fix
     		if (lastSpawnTime - 1000 > world.getWorldTime()) {
@@ -235,9 +235,9 @@ public class ZombieAwareness implements IPFCallback {
 	        			
 	        			ZAUtil.aiTick((EntityLiving)ent);
 	        			
-	        			if (!((EntityLiving)ent).getNavigator().noPath() && ent.onGround && ent.isCollidedHorizontally) {
+	        			/*if (!((EntityLiving)ent).getNavigator().noPath() && ent.onGround && ent.isCollidedHorizontally) {
 	        				//ent.motionY = 0.41999998688697815D;
-	        			}
+	        			}*/
 	        			
 	        			if ((world.provider.dimensionId == 0) && ent instanceof IMob) {
 	        				

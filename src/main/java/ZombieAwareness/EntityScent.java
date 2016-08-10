@@ -83,9 +83,9 @@ public class EntityScent extends Entity implements IEntityAdditionalSpawnData {
         ++this.age;
         this.strength = 100 - this.age / 10;
         //this.setDead();
-        if (type == 0) {
+        /*if (type == 0) {
         	//System.out.println(this.strength + " - " + worldObj.isRemote);
-        }
+        }*/
         
         if(!worldObj.isRemote && (this.strength <= 0 || age > 1200)) {
         	this.setDead();

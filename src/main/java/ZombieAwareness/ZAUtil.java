@@ -53,7 +53,7 @@ public class ZAUtil {
     public static float lastMultiply = 1.0F;
     
     
-    public static Random rand = new Random();
+    public static Random rand = new org.bogdang.modifications.random.XSTR();
     
     //public static int maxTraces = 400;
     
@@ -120,9 +120,12 @@ public class ZAUtil {
 	public static void giveRandomSpeedBoost(EntityLiving ent) {
 		
 		if (ZAConfig.zombieRandSpeedBoost > 0) {
-			double randBoost = ent.worldObj.rand.nextDouble() * ZAConfig.zombieRandSpeedBoost;
+			double randBoost = ent.worldObj.rand.nextFloat() * ZAConfig.zombieRandSpeedBoost;
 			AttributeModifier speedBoostModifier = new AttributeModifier(UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836"), "ZA speed boost", randBoost, 1);
-			ent.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(speedBoostModifier);
+			//ent.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(speedBoostModifier);
+			net.minecraft.entity.ai.attributes.ModifiableAttributeInstance att = (net.minecraft.entity.ai.attributes.ModifiableAttributeInstance) ent.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+			att.removeModifier(speedBoostModifier);
+			att.applyModifier(speedBoostModifier);
 		}
 		
 	}
@@ -285,11 +288,11 @@ public class ZAUtil {
 					}
 	    			
     			}
-    		} else {
+    		}/* else {
     			if (ai_FindSense(ent)) {
     				
     			}
-    		}
+    		}*/
     	}
 	    	
 	    customMobTick(ent);
@@ -325,7 +328,7 @@ public class ZAUtil {
     	
     	if (ent.worldObj.rand.nextInt(1) == 0) {
     		
-    		Random rand = new Random();
+    		Random rand = new org.bogdang.modifications.random.XSTR();
     		
     		int size = 32;
     		
@@ -490,9 +493,9 @@ public class ZAUtil {
 
     	//System.out.println("Derb: " + var0 + " - TC: " + traceCount);
     	
-    	if (var0.contains("pop")) {
+    	/*if (var0.contains("pop")) {
     		//System.out.println("Derb: " + var0 + " - TC: " + traceCount);
-		}
+		}*/
     	
         //TEEEEEMMMMMMMMPPPPPPPPP
         if (!ZAConfigFeatures.awareness_Sound/* || traceCount >= maxTraces*/) {
@@ -1013,20 +1016,21 @@ public class ZAUtil {
 		    	if (noYaw) f3 = 0.00001F;
 		        //int i = (int)Math.floor((double)(f3 / 90F) + 0.5D);
 		        //f3 = (float)i * 90F;
-		        double d = entityliving.prevPosX + (entityliving.posX - entityliving.prevPosX) * (double)f;
-		        double d1 = ((entityliving.prevPosY + (entityliving.posY - entityliving.prevPosY) * (double)f + 1.62D)) - (double)entityliving.yOffset + yOffset + randY;
-		        double d2 = entityliving.prevPosZ + (entityliving.posZ - entityliving.prevPosZ) * (double)f;
-		        Vec3 vec3d = Vec3.createVectorHelper(d, d1, d2);
-		        float f4 = MathHelper.cos(-f3 * 0.01745329F - 3.141593F);
-		        float f5 = MathHelper.sin(-f3 * 0.01745329F - 3.141593F);
-		        float f6 = -MathHelper.cos(-f1 * 0.01745329F - 0.7853982F);
-		        float f7 = MathHelper.sin(-f1 * 0.01745329F - 0.7853982F);
-		        float f8 = f5 * f6;
-		        float f9 = f7;
-		        float f10 = f4 * f6;
+		        float d = (float)entityliving.prevPosX + ((float)entityliving.posX - (float)entityliving.prevPosX) * f;
+		        float d1 = (((float)entityliving.prevPosY + ((float)entityliving.posY - (float)entityliving.prevPosY) * f + 1.62F)) - entityliving.yOffset + yOffset + randY;
+		        float d2 = (float)entityliving.prevPosZ + ((float)entityliving.posZ - (float)entityliving.prevPosZ) * f;
+		        Vec3 vec3d = Vec3.createVectorHelper((double)d, (double)d1, (double)d2);
+		        float temp1 = -f3 * 0.01745329F - 3.141593F;float temp2 = -f1 * 0.01745329F - 0.7853982F;
+		        float f4 = MathHelper.cos(temp1);
+		        float f5 = MathHelper.sin(temp1);
+		        float f6 = -MathHelper.cos(temp2);
+		        float f7 = MathHelper.sin(temp2);
+		        //float f8 = f5 * f6;
+		        //float f9 = f7;
+		        //float f10 = f4 * f6;
 		        //entityliving.info = f3;
-		        double d3 = 2.0D;
-		        Vec3 vec3d1 = vec3d.addVector((double)f8 * d3, (double)f9 * d3, (double)f10 * d3);              // \/ water collide check
+		        float d3 = 2.0F;
+		        Vec3 vec3d1 = vec3d.addVector((double)(f5 * f6 * d3), (double)(f7 * d3), (double)(f4 * f6 * d3));              // \/ water collide check
 		        int lightLevel = ent.worldObj.getBlockLightValue((int)vec3d1.xCoord, (int)vec3d1.yCoord, (int)vec3d1.zCoord);
 		        if (lightLevel > 4) {
 		        	//System.out.println("test light check: " + lightLevel + " - phase: " + tryPhase + " - dist check: " + ent.getDistance(vec3d1.xCoord, vec3d1.yCoord, vec3d1.zCoord));
@@ -1064,24 +1068,25 @@ public class ZAUtil {
 	    	if (noYaw) f3 = 0.00001F;
 	        //int i = (int)Math.floor((double)(f3 / 90F) + 0.5D);
 	        //f3 = (float)i * 90F;
-	        double d = entityliving.prevPosX + (entityliving.posX - entityliving.prevPosX) * (double)f;
-	        double d1 = ((entityliving.prevPosY + (entityliving.posY - entityliving.prevPosY) * (double)f + 1.6200000000000001D)) - (double)entityliving.yOffset + yOffset;
-	        double d2 = entityliving.prevPosZ + (entityliving.posZ - entityliving.prevPosZ) * (double)f;
-	        Vec3 vec3d = Vec3.createVectorHelper(d, d1, d2);
-	        float f4 = MathHelper.cos(-f3 * 0.01745329F - 3.141593F);
-	        float f5 = MathHelper.sin(-f3 * 0.01745329F - 3.141593F);
-	        float f6 = -MathHelper.cos(-f1 * 0.01745329F - 0.7853982F);
-	        float f7 = MathHelper.sin(-f1 * 0.01745329F - 0.7853982F);
-	        float f8 = f5 * f6;
-	        float f9 = f7;
-	        float f10 = f4 * f6;
+	        float d = (float)entityliving.prevPosX + ((float)entityliving.posX - (float)entityliving.prevPosX) * f;
+	        float d1 = (((float)entityliving.prevPosY + ((float)entityliving.posY - (float)entityliving.prevPosY) * f + 1.6200000000000001F)) - entityliving.yOffset + yOffset;
+	        float d2 = (float)entityliving.prevPosZ + ((float)entityliving.posZ - (float)entityliving.prevPosZ) * f;
+	        Vec3 vec3d = Vec3.createVectorHelper((double)d, (double)d1, (double)d2);
+	        float temp1 = -f3 * 0.01745329F - 3.141593F;float temp2 = -f1 * 0.01745329F - 0.7853982F;
+	        float f4 = MathHelper.cos(temp1);
+	        float f5 = MathHelper.sin(temp1);
+	        float f6 = -MathHelper.cos(temp2);
+	        float f7 = MathHelper.sin(temp2);
+	        //float f8 = f5 * f6;
+	        //float f9 = f7;
+	        //float f10 = f4 * f6;
 	        //entityliving.info = f3;
-	        double d3 = 2.0D;
-	        Vec3 vec3d1 = vec3d.addVector((double)f8 * d3, (double)f9 * d3, (double)f10 * d3);              // \/ water collide check
+	        float d3 = 2.0F;
+	        Vec3 vec3d1 = vec3d.addVector((double)(f5 * f6 * d3), (double)(f7 * d3), (double)(f4 * f6 * d3));              // \/ water collide check
 	        int lightLevel = ent.worldObj.getBlockLightValue((int)vec3d1.xCoord, (int)vec3d1.yCoord, (int)vec3d1.zCoord);
-	        if (lightLevel > 4) {
+	        /*if (lightLevel > 4) {
 	        	//System.out.println("test light check: " + lightLevel);
-	        }
+	        }*/
 	        MovingObjectPosition movingobjectposition = entityliving.worldObj.rayTraceBlocks(vec3d, vec3d1, true);
 	
 	        int id = -1;
@@ -1156,7 +1161,7 @@ public class ZAUtil {
 		try {
 			List<Class> listSpawns = new ArrayList<Class>();
 			String[] spawnArray = ZAConfigSpawning.extraSpawningList.split(",");
-			if (spawnArray != null) {
+			//if (spawnArray != null) {
 				for (String entry : spawnArray) {
 					try {
 						Class clazz = Class.forName(entry.trim());
@@ -1169,7 +1174,7 @@ public class ZAUtil {
 						System.out.println("ZA extra spawning: unable to find class for string: " + entry);
 					}
 				}
-			}
+			//}
 			return listSpawns;
 		} catch (Exception e) {
 			e.printStackTrace();

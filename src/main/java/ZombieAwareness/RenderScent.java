@@ -78,21 +78,21 @@ public class RenderScent extends Render {
         World var11 = this.getWorldFromRenderManager();
         GL11.glDepthMask(false);
         float var12 = this.shadowSize;
-        double var13 = var1.lastTickPosX + (var1.posX - var1.lastTickPosX) * (double)var9;
-        double var15 = var1.lastTickPosY + (var1.posY - var1.lastTickPosY) * (double)var9 + (double)var1.getShadowSize();
-        double var17 = var1.lastTickPosZ + (var1.posZ - var1.lastTickPosZ) * (double)var9;
-        int var19 = MathHelper.floor_double(var13 - (double)var12);
-        int var20 = MathHelper.floor_double(var13 + (double)var12);
-        int var21 = MathHelper.floor_double(var15 - (double)var12);
-        int var22 = MathHelper.floor_double(var15);
-        int var23 = MathHelper.floor_double(var17 - (double)var12);
-        int var24 = MathHelper.floor_double(var17 + (double)var12);
+        float var13 = (float)var1.lastTickPosX + ((float)var1.posX - (float)var1.lastTickPosX) * var9;
+        float var15 = (float)var1.lastTickPosY + ((float)var1.posY - (float)var1.lastTickPosY) * var9 + var1.getShadowSize();
+        float var17 = (float)var1.lastTickPosZ + ((float)var1.posZ - (float)var1.lastTickPosZ) * var9;
+        int var19 = MathHelper.floor_float(var13 - var12);
+        int var20 = MathHelper.floor_float(var13 + var12);
+        int var21 = MathHelper.floor_float(var15 - var12);
+        int var22 = MathHelper.floor_float(var15);
+        int var23 = MathHelper.floor_float(var17 - var12);
+        int var24 = MathHelper.floor_float(var17 + var12);
         double var25 = var2 - var13;
         double var27 = var4 - var15;
         double var29 = var6 - var17;
         Tessellator var31 = Tessellator.instance;
         var31.startDrawingQuads();
-        double str = (double)(((double)((EntityScent)var1).strength)/100.0D);
+        double str = ((((EntityScent)var1).strength)/100.0D);
 
         //System.out.println("hmmm? - " + var1 + " - " + str);
         for(int var32 = var19; var32 <= var20; ++var32) {
@@ -103,7 +103,7 @@ public class RenderScent extends Render {
                     //System.out.println("1 - " + var35 + " - " + var11.getBlockLightValue(var32, var33, var34));
                     if(!CoroUtilBlock.isAir(var35) && var11.getBlockLightValue(var32, var33, var34) > 3) {
                         //System.out.println("2");
-                        this.renderImageOnBlock(var35, var2, var4 + (double)var1.getShadowSize(), var6, var32, var33, var34, var8, var12, var25, var27 + (double)var1.getShadowSize(), var29, str);
+                        this.renderImageOnBlock(var35, var2, var4 + (double)var1.getShadowSize(), var6, var32, var33, var34, var8, var12, var25, var27 + var1.getShadowSize(), var29, str);
                     }
                 }
             }
@@ -135,19 +135,19 @@ public class RenderScent extends Render {
 
             //System.out.println(var20);
             var19.setColorRGBA_F(1.0F, 1.0F, 1.0F, (float)var20);
-            double var22 = (double)var8 + var1.getBlockBoundsMinX() + var13;
-            double var24 = (double)var8 + var1.getBlockBoundsMaxX() + var13;
-            double var26 = (double)var9 + var1.getBlockBoundsMinY() + var15 + 0.015625D;
-            double var28 = (double)var10 + var1.getBlockBoundsMinZ() + var17;
-            double var30 = (double)var10 + var1.getBlockBoundsMaxZ() + var17;
-            float var32 = (float)((var2 - var22) / 2.0D / (double)var12 + 0.5D);
-            float var33 = (float)((var2 - var24) / 2.0D / (double)var12 + 0.5D);
-            float var34 = (float)((var6 - var28) / 2.0D / (double)var12 + 0.5D);
-            float var35 = (float)((var6 - var30) / 2.0D / (double)var12 + 0.5D);
-            var19.addVertexWithUV(var22, var26, var28, (double)var32, (double)var34);
-            var19.addVertexWithUV(var22, var26, var30, (double)var32, (double)var35);
-            var19.addVertexWithUV(var24, var26, var30, (double)var33, (double)var35);
-            var19.addVertexWithUV(var24, var26, var28, (double)var33, (double)var34);
+            float var22 = var8 + (float)var1.getBlockBoundsMinX() + (float)var13;
+            float var24 = var8 + (float)var1.getBlockBoundsMaxX() + (float)var13;
+            float var26 = var9 + (float)var1.getBlockBoundsMinY() + (float)var15 + 0.015625F;
+            float var28 = var10 + (float)var1.getBlockBoundsMinZ() + (float)var17;
+            float var30 = var10 + (float)var1.getBlockBoundsMaxZ() + (float)var17;
+            float var32 = ((float)(var2 - var22) / 2.0F / var12 + 0.5F);
+            float var33 = ((float)(var2 - var24) / 2.0F / var12 + 0.5F);
+            float var34 = ((float)(var6 - var28) / 2.0F / var12 + 0.5F);
+            float var35 = ((float)(var6 - var30) / 2.0F / var12 + 0.5F);
+            var19.addVertexWithUV((double)var22, (double)var26, (double)var28, (double)var32, (double)var34);
+            var19.addVertexWithUV((double)var22, (double)var26, (double)var30, (double)var32, (double)var35);
+            var19.addVertexWithUV((double)var24, (double)var26, (double)var30, (double)var33, (double)var35);
+            var19.addVertexWithUV((double)var24, (double)var26, (double)var28, (double)var33, (double)var34);
             //}
         }
     }

@@ -21,6 +21,9 @@ version = "1.10"
 group= "zombieawareness" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "zombieawareness-1.7.10"
 
+sourceCompatibility = 7
+targetCompatibility = 7
+
 minecraft {
     version = "1.7.10-10.13.0.1180"
     assetDir = "eclipse/assets"
@@ -31,7 +34,7 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
-	compile files("../forge-1.7.10-CoroUtil/build/classes/main/")
+	//compile files("../forge-1.7.10-CoroUtil/build/classes/main/")
       
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
@@ -61,4 +64,22 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task devJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+    manifest {
+        //attributes 'FMLCorePlugin': 'WhateverLoaderClass'
+        //attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
+artifacts {
+    archives devJar
 }
